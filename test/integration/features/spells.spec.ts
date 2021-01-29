@@ -18,11 +18,6 @@ const getSpells = async () => {
   return data
 }
 
-// const getSpellSuggestions = async (spellId: string) => {
-//   const { data } = await apiRequest.get(`/api/v1/spells/${spellId}/suggestions`)
-//   return data
-// }
-
 const connectSpells = async (originId: string, destinationId: string) => {
   const body = {
     spell_id: destinationId
@@ -32,8 +27,6 @@ const connectSpells = async (originId: string, destinationId: string) => {
   return data
 }
 
-// Since it's a microservice, I decided to create all test cases in the same file.
-// Usually I'd rather split this in features for future maintainability.
 describe('Spell APIs', () => {
   test('Create new spell', async () => {
     const { result, data } = await createSpell()
@@ -128,114 +121,4 @@ describe('Spell APIs', () => {
       message: 'Cannot connect the same spell'
     })
   })
-
-  // test('Get suggestions for spell', async () => {
-  //   const names = ['Ross', 'Chandler', 'Monica', 'Joey', 'Rachel', 'Phoebe']
-  //   const ids: any = []
-  //   for (const name of names) {
-  //     const { data: { id } } = await createSpell({ name })
-  //     ids.push(id)
-  //   }
-  //   // Ross is friends with Chandler and Monica
-  //   await connectSpells(ids[0], ids[1])
-  //   await connectSpells(ids[0], ids[2])
-
-  //   // Chandler is friends with Ross and Joey (no rating)
-  //   await connectSpells(ids[1], ids[3])
-
-  //   // Phoebe is friends with Chandler and Monica (rating: 2)
-  //   await connectSpells(ids[5], ids[1])
-  //   await connectSpells(ids[5], ids[2])
-
-  //   // Joey is friends with Chandler and Rachel (rating: 1)
-  //   await connectSpells(ids[3], ids[4])
-
-  //   const { result, data } = await getSpellSuggestions(ids[0])
-  //   expect(result).toMatchObject({
-  //     code: 200,
-  //     info: 'Suggested spells list'
-  //   })
-  //   expect(data).toMatchObject([{
-  //     connection: {
-  //       isPrivate: false,
-  //       connections: [ids[1], ids[2]],
-  //       name: 'Phoebe'
-  //     },
-  //     rating: 2
-  //   }, {
-  //     connection: {
-  //       isPrivate: false,
-  //       connections: [ids[1], ids[4]],
-  //       name: 'Joey'
-  //     },
-  //     rating: 1
-  //   }, {
-  //     connection: {
-  //       isPrivate: false,
-  //       connections: [ids[3]],
-  //       name: 'Rachel'
-  //     },
-  //     rating: 0
-  //   }])
-  // })
-
-  // test('Get suggestions for spell ommitting private spells', async () => {
-  //   const friends = [
-  //     { name: 'Ross' },
-  //     { name: 'Chandler' },
-  //     { name: 'Monica' },
-  //     { name: 'Joey', isPrivate: true },
-  //     { name: 'Rachel' },
-  //     { name: 'Phoebe' }
-  //   ]
-  //   const ids: any = []
-  //   for (const friend of friends) {
-  //     const { data: { id } } = await createSpell(friend)
-  //     ids.push(id)
-  //   }
-  //   // Ross is friends with Chandler and Monica
-  //   await connectSpells(ids[0], ids[1])
-  //   await connectSpells(ids[0], ids[2])
-
-  //   // Chandler is friends with Ross and Joey (no rating)
-  //   await connectSpells(ids[1], ids[3])
-
-  //   // Phoebe is friends with Chandler and Monica (rating: 2)
-  //   await connectSpells(ids[5], ids[1])
-  //   await connectSpells(ids[5], ids[2])
-
-  //   // Joey is friends with Chandler and Rachel (rating: 1) but it won't show because its private
-  //   await connectSpells(ids[3], ids[4])
-
-  //   const { result, data } = await getSpellSuggestions(ids[0])
-  //   expect(result).toMatchObject({
-  //     code: 200,
-  //     info: 'Suggested spells list'
-  //   })
-  //   expect(data).toMatchObject([{
-  //     connection: {
-  //       isPrivate: false,
-  //       connections: [ids[1], ids[2]],
-  //       name: 'Phoebe'
-  //     },
-  //     rating: 2
-  //   }, {
-  //     connection: {
-  //       isPrivate: false,
-  //       connections: [ids[3]],
-  //       name: 'Rachel'
-  //     },
-  //     rating: 0
-  //   }])
-  // })
-
-  // test('Get suggestions for spell: fails because spell does not exist', async () => {
-  //   const response = await getSpellSuggestions('FakeId')
-
-  //   expect(response).toMatchObject({
-  //     name: 'SpellNotFound',
-  //     status: 404,
-  //     message: 'Spell does not exist'
-  //   })
-  // })
 })
